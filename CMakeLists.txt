@@ -5,7 +5,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "~/cmpt433/public")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
 
-set(CMAKE_C_STANDARD 99)
+#set(CMAKE_C_STANDARD 99)
+
+SET(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
+
 
 add_executable(Beat_Box
         main.c

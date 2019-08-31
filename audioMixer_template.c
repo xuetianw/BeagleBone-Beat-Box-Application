@@ -47,12 +47,15 @@ static int volume = 0;
 
 void AudioMixer_init(void)
 {
-	AudioMixer_setVolume(DEFAULT_VOLUME);
+//	AudioMixer_setVolume(DEFAULT_VOLUME);
 
 	// Initialize the currently active sound-bites being played
 	// REVISIT:- Implement this. Hint: set the pSound pointer to NULL for each
 	//     sound bite.
-
+    for(int i = 0; i < MAX_SOUND_BITES; i++) {
+        soundBites[i].pSound = NULL;
+        soundBites[i].location = 0;
+    }
 
 
 
@@ -157,6 +160,21 @@ void AudioMixer_queueSound(wavedata_t *pSound)
 	 */
 
 
+    pthread_mutex_lock(&audioMutex);
+
+    for (int i = 0; i < MAX_SOUND_BITES; i++) {
+        if (soundBites[i].pSound == NULL) {
+            soundBites[i].pSound = pSound;
+            soundBites[i].location = 0;
+            pthread_mutex_unlock(&audioMutex);
+            return;
+        }
+    }
+
+    printf("error message to the console\n");
+    pthread_mutex_unlock(&audioMutex);
+
+
 
 
 
@@ -164,10 +182,10 @@ void AudioMixer_queueSound(wavedata_t *pSound)
 
 void AudioMixer_cleanup(void)
 {
-	printf("Stopping audio...\n");
+//	printf("Stopping audio...\n");
 
 	// Stop the PCM generation thread
-	stopping = true;
+//	stopping = true;
 	pthread_join(playbackThreadId, NULL);
 
 	// Shutdown the PCM output, allowing any pending sound to play out (drain)
@@ -273,12 +291,36 @@ static void fillPlaybackBuffer(short *playbackBuffer, int size)
 	 *
 	 */
 
+	memset(playbackBuffer, 0, size * sizeof(*playbackBuffer));
 
+    pthread_mutex_lock(&audioMutex);
 
+    for (int i = 0; i < MAX_SOUND_BITES; i++) {
+        if (soundBites[i].pSound != NULL) {
+            wavedata_t *tempwav = soundBites[i].pSound;
+            int location = soundBites[i].location;
+            for (int j = 0; j < size; ++j)
+            {
+                if((int)tempwav->pData[location] + (int)playbackBuffer[j] > SHRT_MAX) {
+                    playbackBuffer[j] = SHRT_MAX;
+                } else if ((int)tempwav->pData[location] + (int)playbackBuffer[j] < SHRT_MIN) {
+                    playbackBuffer[j] = SHRT_MIN;
+                } else {
+                    playbackBuffer[j] += tempwav->pData[location];
+                }
+                location ++;
+                if (location >= tempwav->numSamples) {
+                    // AudioMixer_freeWaveFileData(soundBeats[i].pSound);
+                    soundBites[i].pSound = NULL;
+                    location = 0;
+                    break;
+                }
+            }
+            soundBites[i].location = location;
+        }
+    }
 
-
-
-
+    pthread_mutex_unlock(&audioMutex);
 }
 
 
