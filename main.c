@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "audioMixer_template.h"
-`#include "music.h"
+#include "music.h"
 
 
 int main() {
@@ -11,6 +11,7 @@ int main() {
     base_drum();
     hi_hat();
     hi_snare();
+
     AudioMixer_cleanup();
 
     return 0;
