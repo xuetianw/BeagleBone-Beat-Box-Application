@@ -97,12 +97,15 @@ void process_message(char *message, struct sockaddr_in* sin) {
     printf("%s\n", message);
     if (strcmp(message, "none\n") == 0) {
 
+        set_music_number(MUSIC_NOTHING);
+
     } else if (strcmp(message, "rock 1\n") == 0) {
 
-        rock1();
+        set_music_number(ROCK1NUM);
 
     } else if (strcmp(message, "rock 2\n") == 0) {
 
+        set_music_number(ROCK2NUM);
 
     } else if (strcmp(message, "get volume\n") == MIN_VOLUME) {
 

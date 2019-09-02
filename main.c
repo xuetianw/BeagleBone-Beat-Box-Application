@@ -13,7 +13,7 @@ int main() {
 
 //    base_drum();
 //    hi_hat();
-//    hi_snare();
+//    snare();
 
     AudioMixer_cleanup();
     Udp_cleanup();
