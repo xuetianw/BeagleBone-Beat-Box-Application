@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "audioMixer_template.h"
 #include "music.h"
+#include "udp_listen.h"
 
 
 int main() {
@@ -8,11 +9,14 @@ int main() {
 
     music_init();
 
-    base_drum();
-    hi_hat();
-    hi_snare();
+    UdpListener_startListening();
+
+//    base_drum();
+//    hi_hat();
+//    hi_snare();
 
     AudioMixer_cleanup();
+    Udp_cleanup();
 
     return 0;
 }
