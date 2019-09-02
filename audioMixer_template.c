@@ -2,6 +2,7 @@
 // which are left as incomplete.
 // Note: Generates low latency audio on BeagleBone Black; higher latency found on host.
 #include "audioMixer_template.h"
+#include "music.h"
 #include <alsa/asoundlib.h>
 #include <stdbool.h>
 #include <pthread.h>
@@ -12,6 +13,7 @@
 static snd_pcm_t *handle;
 
 #define DEFAULT_VOLUME 80
+#define DEFAULT_BPM 120
 
 #define SAMPLE_RATE 44100
 #define NUM_CHANNELS 1
@@ -48,6 +50,7 @@ static int volume = 0;
 void AudioMixer_init(void)
 {
 //	AudioMixer_setVolume(DEFAULT_VOLUME);
+    set_BPM(DEFAULT_BPM);
 
 	// Initialize the currently active sound-bites being played
 	// REVISIT:- Implement this. Hint: set the pSound pointer to NULL for each

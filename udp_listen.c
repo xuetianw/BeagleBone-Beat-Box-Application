@@ -15,6 +15,10 @@
 #define MAX_VOLUME 100
 #define MIN_VOLUME 0
 
+#define MAX_BPM 300
+#define MIN_BPM 40
+
+
 pthread_t udp_id;
 void *udp_thread();
 void process_message(char *message, struct sockaddr_in* sin);
@@ -95,7 +99,10 @@ void process_message(char *message, struct sockaddr_in* sin) {
 
     } else if (strcmp(message, "rock 1\n") == 0) {
 
+        rock1();
+
     } else if (strcmp(message, "rock 2\n") == 0) {
+
 
     } else if (strcmp(message, "get volume\n") == MIN_VOLUME) {
 
@@ -120,10 +127,10 @@ void process_message(char *message, struct sockaddr_in* sin) {
     } else if (strcmp(message, "decrease volume\n") == MIN_VOLUME) {
 
         int current_valume =  AudioMixer_getVolume();
-        if (current_valume == 0) {
+        if (current_valume == MIN_VOLUME) {
             sprintf(message, "volume cannot go below %d\n", MIN_VOLUME);
         } else {
-            if (current_valume - 5 < 0) {
+            if (current_valume - 5 < MIN_VOLUME) {
                 AudioMixer_setVolume(current_valume);
                 sprintf(message, "volume has been increased to %d\n", MIN_VOLUME);
             } else {
@@ -135,9 +142,24 @@ void process_message(char *message, struct sockaddr_in* sin) {
 
     } else if (strcmp(message, "get bpm\n") == 0) {
 
-    } else if (strcmp(message, "increase bpm\n") == 0) {
+        sprintf(message, "current BPM is %d\n", get_BPM());
 
-    } else if (strcmp(message, "decrease bpm\n") == 0) {
+    } else if (strcmp(message, "increase BPM\n") == 0) {
+
+    } else if (strcmp(message, "decrease BPM\n") == 0) {
+        int current_bpm = get_BPM();
+        if (current_bpm == MIN_BPM) {
+            sprintf(message, "BPM cannot go below %d\n", MIN_VOLUME);
+        } else {
+            if (current_bpm - 5 < MIN_BPM) {
+                set_BPM(MIN_BPM);
+                sprintf(message, "BPM has been increased to %d\n", MIN_VOLUME);
+            } else {
+                int newBPM = current_bpm - 5;
+                set_BPM(newBPM);
+                sprintf(message, "BPM has been increased to %d\n", newBPM);
+            }
+        }
 
     } else if (strcmp(message, "hi-hat\n") == 0) {
 
