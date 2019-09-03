@@ -3,68 +3,68 @@
 //
 // Launch server with:
 //   $ node server.js
-var PORT_NUMBER = 3043;
+const path = require('path')
+const http = require('http')
+const express = require('express')
+const socketio = require('socket.io')
+const Filter = require('bad-words')
+
+const app = express()
+const server = http.createServer(app)
+const io = socketio(server)
+
+var dgram = require('dgram');
 
 
-var http = require('http');
-var fs   = require('fs');
-var path = require('path');
-var mime = require('mime');
+const port = process.env.PORT || 8080
+const publicDirectoryPath = path.join(__dirname, '/public')
 
-/* 
- * Create the static web server
- */
-var server = http.createServer(function(request, response) {
-	var filePath = false;
-	
-	if (request.url == '/') {
-		filePath = 'public/index.html';
-	} else {
-		filePath = 'public' + request.url;
-	}
-	
-	var absPath = './' + filePath;
-	serveStatic(response, absPath);
-});
+app.use(express.static(publicDirectoryPath))
 
-server.listen(PORT_NUMBER, function() {
-	console.log("Server listeneing on port " + PORT_NUMBER);
-});
+io.on('connection', (socket) => {
+	console.log('New WebSocket connection')
 
-function serveStatic(response, absPath) {
-	fs.exists(absPath, function(exists) {
-		if (exists) {
-			fs.readFile(absPath, function(err, data) {
-				if (err) {
-					send404(response);
-				} else {
-					sendFile(response, absPath, data);
-				}
-			});
-		} else {
-			send404(response);
-		}
-	});
-}
+    socket.on('prime', function(data) {
+        console.log('prime command: ' + data);
 
-function send404(response) {
-	response.writeHead(404, {'Content-Type': 'text/plain'});
-	response.write('Error 404: resource not found.');
-	response.end();
-}
+        // Info for connecting to the local process via UDP
+        var PORT = 8088;
+        var HOST = '127.0.0.1';
+        var buffer = new Buffer(data);
 
-function sendFile(response, filePath, fileContents) {
-	response.writeHead(
-			200,
-			{"content-type": mime.lookup(path.basename(filePath))}
-		);
-	response.end(fileContents);
-}
+        var client = dgram.createSocket('udp4');
+        client.send(buffer, 0, buffer.length, PORT, HOST, function(err, bytes) {
+            if (err)
+                throw err;
+            console.log('UDP message sent to ' + HOST +':'+ PORT);
+        });
 
+        client.on('listening', function () {
+            var address = client.address();
+            console.log('UDP Client: listening on ' + address.address + ":" + address.port);
+        });
+        // Handle an incoming message over the UDP from the local application.
+        client.on('message', function (message, remote) {
+            console.log("UDP Client: message Rx" + remote.address + ':' + remote.port +' - ' + message);
 
-/*
- * Create the Userver to listen for the websocket
- */
-var udpServer = require('./lib/udp_server');
-udpServer.listen(server);
+            var reply = message.toString('utf8')
+            socket.emit('commandReply', reply);
+
+            client.close();
+
+        });
+        client.on("UDP Client: close", function() {
+            console.log("closed");
+        });
+        client.on("UDP Client: error", function(err) {
+            console.log("error: ",err);
+        });
+    });
+
+})
+
+server.listen(port, () => {
+	console.log(`Server is up on port ${port}!`)
+})
+
 

@@ -2,13 +2,13 @@
 // Client-side interactions with the browser.
 
 // Make connection to server when web page is fully loaded.
-var socket = io.connect("http://localhost:3042");
+const socket = io()
 $(document).ready(function() {
 	$('#modeNothing').click(function(){
 		sendPrimeCommand("MUSIC1");
 	});
 	$('#modeRock1').click(function(){
-		sendPrimeCommand("MUSIC2");
+		sendPrimeCommand("rock 1\n");
 	});
 	$('#modeRock2').click(function(){
 		sendPrimeCommand("MUSIC3");

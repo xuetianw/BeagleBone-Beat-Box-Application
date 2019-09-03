@@ -10,7 +10,7 @@
 
 
 #define MSG_MAX_LEN 10240
-#define PORT		22110
+#define PORT		8088
 
 #define MAX_VOLUME 100
 #define MIN_VOLUME 0
