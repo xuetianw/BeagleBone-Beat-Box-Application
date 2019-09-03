@@ -148,6 +148,19 @@ void process_message(char *message, struct sockaddr_in* sin) {
         sprintf(message, "current BPM is %d\n", get_BPM());
 
     } else if (strcmp(message, "increase BPM\n") == 0) {
+        int current_BPM = get_BPM();
+        if (current_BPM == MAX_BPM) {
+            sprintf(message, "BPM cannot go above %d\n", MAX_BPM);
+        } else {
+            if (current_BPM + 5 > MAX_BPM) {
+                set_BPM(MAX_BPM);
+                sprintf(message, "BPM has been increased to %d\n", MAX_BPM);
+            } else {
+                int newBPM = current_BPM + 5;
+                set_BPM(newBPM);
+                sprintf(message, "BPM has been increased to %d\n", newBPM);
+            }
+        }
 
     } else if (strcmp(message, "decrease BPM\n") == 0) {
         int current_bpm = get_BPM();

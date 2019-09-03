@@ -63,8 +63,6 @@ void set_BPM(int new_BPM) {
 void rock1() {
     // Time For Half Beat [sec] = 60 [sec/min] / BPM / 2 [half-beats per beat]
     long sleeptime = (60. / BPM / 2) * 1000000000;
-    printf("60. / BPM / 2 is %f\n", 60. / BPM / 2);
-    printf("60 / BPM / 2 is %d\n", 60 / BPM / 2);
 
 
     //Beat 1
@@ -111,11 +109,11 @@ void rock2() {
 
     //Beat 1
     hi_hat();
-    base_drum();
+    hi_snare();
     timing(sleeptime);
 
     //Beat 1.5
-    hi_hat();
+    base_drum();
     timing(sleeptime);
 
     //Beat 2
@@ -124,7 +122,7 @@ void rock2() {
     timing(sleeptime);
 
     //Beat 2.5
-    hi_hat();
+    base_drum();
     timing(sleeptime);
 
     //Beat 3
@@ -133,16 +131,16 @@ void rock2() {
     timing(sleeptime);
 
     //Beat 3.5
-    hi_hat();
+    hi_snare();
     timing(sleeptime);
 
     //Beat 4
     hi_hat();
-    hi_snare();
+    base_drum();
     timing(sleeptime);
 
     //Beat 4.5
-    hi_hat();
+    hi_snare();
     timing(sleeptime);
 }
 
