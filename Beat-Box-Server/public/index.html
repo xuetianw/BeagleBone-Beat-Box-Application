@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- saved from url=(0079)http://www.cs.sfu.ca/CourseCentral/433/bfraser/assignments/files/as3/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><style id="stndz-style">div[class*="item-container-obpd"], a[data-redirect*="paid.outbrain.com"], a[onmousedown*="paid.outbrain.com"] { display: none !important; } a div[class*="item-container-ad"] { height: 0px !important; overflow: hidden !important; position: absolute !important; } div[data-item-syndicated="true"] { display: none !important; } .grv_is_sponsored { display: none !important; } .zergnet-widget-related { display: none !important; } </style>
+	<title>BeagleBone Beat-Box</title>
+	
+	<link rel="stylesheet" href="./stylesheets/style.css">
+</head>
+
+<body>
+<form>
+	<h1>BeagleBone Beat-Box</h1>
+	<div>by YourNameGoesHere!</div>
+
+	<p>This page is a partial solution to what's needed. You'll need to add some extra sections for tempo and triggering sounds via buttons.</p>
+	
+	<div id="content">
+		<div id="status-box">
+			<h2>BeatBox's Status</h2>
+			<div id="status">None yet...</div>
+		</div>
+		
+		<div id="left-box">
+			<div id="modediv">
+				<h2>Drum Beat Selection</h2>
+				<p>Current drum beat mode is: <strong><span id="modeid"></span></strong></p>
+				<p>
+					<input type="button" id="modeNone" value="None">
+					<input type="button" id="modeRock1" value="Rock #1">
+					<input type="button" id="modeRock2" value="Describe Your Beat here">
+				</p>
+				<h3>Volume</h3>
+				<p>
+					<input type="button" id="volumeDown" value=" - ">
+					<input type="text" id="volumeid" value="???" size="3" readonly="">
+					<input type="button" id="volumeUp" value=" + ">
+					(0 - 100)
+				</p>
+			</div>
+			
+		</div>
+		<div id="error-box">
+			<h2>Server Error</h2>
+			<p>Server error detected. Please resolve error before continuing.</p>
+			<div><code id="error-text">No error yet... did you hide this div correctly via Javascript? :)</code></div>
+		</div>
+
+	</div>
+</form>
+	
+	<script src="./javascripts/socket.io.js"></script>
+	<script src="./javascripts/jquery-1.11.1.min.js" type="text/javascript"></script>
+
+	<script src="./javascripts/beatbox_ui.js" type="text/javascript"></script>
+
+</body></html>
