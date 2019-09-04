@@ -36,11 +36,13 @@ $(document).ready(function() {
     $('#Base').click(function(){
         sendPrimeCommand("base\n");
     });
+
+
 });
 
 function sendPrimeCommand(message) {
 	socket.emit('prime', message);
-};
+}
 
 function sendRequest() {
     socket.emit('prime', "get volume\n");
@@ -59,6 +61,17 @@ socket.on('commandReply', function(result) {
         $('#BPMid').val(temp)
     } else if( result.includes("current mode is ")) {
         var temp = result.substring("current mode is ".length, result.length);
-        $('#modeid').html(temp)
+        // $('#modeid').html(temp)
     }
+    // console.log("testest");
+
+
+
+    // var newDiv = $('<div></div>').text(result);
+    // $('#messages').append(newDiv);
+    // $('#messages').scrollTop($('#messages').prop('scrollHeight'));
 });
+
+socket.on('disconnect', () => {
+    $('#error-box').show();
+})
