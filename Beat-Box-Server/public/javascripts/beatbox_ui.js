@@ -1,6 +1,11 @@
 "use strict";
 // Client-side interactions with the browser.
 
+var TODAY = new Date();
+var HOUR = TODAY.getHours();
+var MINUTES = TODAY.getMinutes();
+var SECOND = TODAY.getSeconds();
+
 // Make connection to server when web page is fully loaded.
 const socket = io()
 $(document).ready(function() {
@@ -36,8 +41,6 @@ $(document).ready(function() {
     $('#Base').click(function(){
         sendPrimeCommand("base\n");
     });
-
-
 });
 
 function sendPrimeCommand(message) {
@@ -48,7 +51,15 @@ function sendRequest() {
     socket.emit('prime', "get volume\n");
     socket.emit('prime', "get bpm\n");
     socket.emit('prime', "current mode\n");
+    // socket.emit('proc', 'uptime');
+    var today = new Date();
+    var part1 = today.getHours() - HOUR;
+    var part2 = today.getMinutes() - MINUTES;
+    var part3 = today.getSeconds()- SECOND;
+    var date = part1 + '-'+ part2 + '-' + part3;
+    // console.log(date);
 
+    $('#status').html("devices up for :<br>" + date.toString() + " H : M: S");
 }
 
 socket.on('commandReply', function(result) {
@@ -75,3 +86,4 @@ socket.on('commandReply', function(result) {
 socket.on('disconnect', () => {
     $('#error-box').show();
 })
+
