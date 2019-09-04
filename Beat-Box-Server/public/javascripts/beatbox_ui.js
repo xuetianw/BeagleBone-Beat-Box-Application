@@ -61,7 +61,7 @@ socket.on('commandReply', function(result) {
         $('#BPMid').val(temp)
     } else if( result.includes("current mode is ")) {
         var temp = result.substring("current mode is ".length, result.length);
-        // $('#modeid').html(temp)
+        $('#modeid').html(temp)
     }
     // console.log("testest");
 
