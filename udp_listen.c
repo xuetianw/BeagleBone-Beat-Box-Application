@@ -104,8 +104,16 @@ void process_message(char *message, struct sockaddr_in* sin) {
         set_music_number(ROCK1NUM);
 
     } else if (strcmp(message, "rock 2\n") == 0) {
-
         set_music_number(ROCK2NUM);
+
+    } else if (strcmp(message, "current mode\n") == 0) {
+        if (get_music_number() == MUSIC_NOTHING) {
+            sprintf(message, "current mode is no muisc\n");
+        } else if (get_music_number() == ROCK1NUM) {
+            sprintf(message, "current mode is rock 1\n");
+        } else if (get_music_number() == ROCK2NUM) {
+            sprintf(message, "current mode is rock 2\n");
+        }
 
     } else if (strcmp(message, "get volume\n") == MIN_VOLUME) {
 
