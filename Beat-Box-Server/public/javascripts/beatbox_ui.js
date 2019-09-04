@@ -5,21 +5,27 @@
 const socket = io()
 $(document).ready(function() {
 	$('#modeNothing').click(function(){
-		sendPrimeCommand("MUSIC1");
+		sendPrimeCommand("none");
 	});
 	$('#modeRock1').click(function(){
 		sendPrimeCommand("rock 1\n");
 	});
 	$('#modeRock2').click(function(){
-		sendPrimeCommand("MUSIC3");
+		sendPrimeCommand("rock 2\n");
 	});
-	$('#btnLast').click(function(){
-		sendPrimeCommand("last 5");
+	$('#volumeDown').click(function(){
+		sendPrimeCommand("decrease volume\n");
 	});
-	$('#btnStop').click(function(){
-		sendPrimeCommand("stop");
+	$('#volumeUp').click(function(){
+		sendPrimeCommand("increase volume");
 	});
-	
+	$('#PCMDown').click(function(){
+		sendPrimeCommand("decrease BPM\n");
+	});
+	$('#PCMUp').click(function(){
+		sendPrimeCommand("increase BPM\n");
+	});
+
 	socket.on('commandReply', function(result) {
 		var newDiv = $('<div></div>').text(result);
 		$('#messages').append(newDiv);
