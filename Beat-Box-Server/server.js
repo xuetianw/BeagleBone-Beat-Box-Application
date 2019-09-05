@@ -13,6 +13,8 @@ const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 
+var fs   = require('fs');
+
 var dgram = require('dgram');
 
 
@@ -60,6 +62,56 @@ io.on('connection', (socket) => {
             console.log("error: ",err);
         });
     });
+
+    socket.on('proc', function(fileName) {
+        if (fileName === 'get time') {
+            var absPath = "/proc/" + 'uptime';
+            console.log('accessing ' + absPath);
+
+            fs.exists(absPath, function(exists) {
+                if (exists) {
+                    // Can use 2nd param: 'utf8',
+                    fs.readFile(absPath, function(err, fileData) {
+                        if (err) {
+                            emitSocketData(socket, 'get time',
+                                "ERROR: Unable to read file " + absPath);
+                        } else {
+                            emitSocketData(socket, 'get time',
+                                fileData.toString('utf8'));
+                        }
+                    });
+                } else {
+                    emitSocketData(socket, fileName,
+                        "ERROR: File " + absPath + " not found.");
+                }
+            });
+            return;
+        }
+
+        // NOTE: Very unsafe? Why?
+        // Hint: think of ../
+        var absPath = "/proc/" + fileName;
+        console.log('accessing ' + absPath);
+
+        fs.exists(absPath, function(exists) {
+            if (exists) {
+                // Can use 2nd param: 'utf8',
+                fs.readFile(absPath, function(err, fileData) {
+                    if (err) {
+                        emitSocketData(socket, fileName,
+                            "ERROR: Unable to read file " + absPath);
+                    } else {
+                        emitSocketData(socket, fileName,
+                            fileData.toString('utf8'));
+                    }
+                });
+            } else {
+                emitSocketData(socket, fileName,
+                    "ERROR: File " + absPath + " not found.");
+            }
+        });
+    });
+
 })
 
 server.listen(port, () => {
@@ -67,3 +119,17 @@ server.listen(port, () => {
 })
 
 
+
+
+
+function emitSocketData(socket, fileName, contents) {
+    var result = {
+        fileName: fileName,
+        contents: contents
+    }
+    if (fileName === 'get time') {
+        socket.emit('initialtime', result);
+    } else {
+        socket.emit('fileContents', result);
+    }
+}

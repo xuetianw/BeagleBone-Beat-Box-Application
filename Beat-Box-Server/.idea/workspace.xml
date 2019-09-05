@@ -32,7 +32,7 @@
             <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
               <provider selected="true" editor-type-id="text-editor">
                 <state>
-                  <caret column="6" lean-forward="true" selection-start-column="6" selection-end-column="6" />
+                  <caret column="6" selection-start-column="6" selection-end-column="6" />
                 </state>
               </provider>
             </entry>
@@ -40,8 +40,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/public/javascripts/beatbox_ui.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="505">
-                  <caret line="61" column="43" selection-start-line="61" selection-start-column="43" selection-end-line="61" selection-end-column="43" />
+                <state relative-caret-position="693">
+                  <caret line="124" column="123" selection-start-line="124" selection-start-column="123" selection-end-line="124" selection-end-column="123" />
                 </state>
               </provider>
             </entry>
@@ -62,8 +62,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/server.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="587">
-                  <caret line="59" column="39" lean-forward="true" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="39" />
+                <state relative-caret-position="768">
+                  <caret line="121" selection-start-line="121" selection-end-line="121" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                   </folding>
@@ -90,6 +90,8 @@
       <find>BPMid</find>
       <find>span</find>
       <find>modeid</find>
+      <find>fileContents</find>
+      <find>minutes</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -107,7 +109,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="4">
-    <option name="x" value="60" />
+    <option name="x" value="69" />
     <option name="y" value="24" />
     <option name="width" value="2215" />
     <option name="height" value="1416" />
@@ -227,7 +229,9 @@
       <workItem from="1567536885709" duration="39000" />
       <workItem from="1567537271755" duration="5867000" />
       <workItem from="1567574686386" duration="17862000" />
-      <workItem from="1567598145534" duration="12130000" />
+      <workItem from="1567598145534" duration="12514000" />
+      <workItem from="1567621489820" duration="11000" />
+      <workItem from="1567635852005" duration="5578000" />
     </task>
     <task id="LOCAL-00001" summary="add pcm html and fix node UDP interface connection">
       <created>1567576789690</created>
@@ -247,7 +251,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57289000" />
+    <option name="totallyTimeSpent" value="63262000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -259,7 +263,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="60" y="24" width="2215" height="1416" extended-state="4" />
+    <frame x="69" y="24" width="2215" height="1416" extended-state="4" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4988662" visible="true" weight="0.09169708" />
@@ -375,7 +379,7 @@
     <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="6" lean-forward="true" selection-start-column="6" selection-end-column="6" />
+          <caret column="6" selection-start-column="6" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -388,8 +392,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="587">
-          <caret line="59" column="39" lean-forward="true" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="39" />
+        <state relative-caret-position="768">
+          <caret line="121" selection-start-line="121" selection-end-line="121" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -398,8 +402,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/beatbox_ui.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="61" column="43" selection-start-line="61" selection-start-column="43" selection-end-line="61" selection-end-column="43" />
+        <state relative-caret-position="693">
+          <caret line="124" column="123" selection-start-line="124" selection-start-column="123" selection-end-line="124" selection-end-column="123" />
         </state>
       </provider>
     </entry>

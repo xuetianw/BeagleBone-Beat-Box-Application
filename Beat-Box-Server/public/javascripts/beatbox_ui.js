@@ -1,11 +1,6 @@
 "use strict";
 // Client-side interactions with the browser.
-
-var TODAY = new Date();
-var HOUR = TODAY.getHours();
-var MINUTES = TODAY.getMinutes();
-var SECOND = TODAY.getSeconds();
-
+var INITIALSECOND;
 // Make connection to server when web page is fully loaded.
 const socket = io()
 $(document).ready(function() {
@@ -41,6 +36,7 @@ $(document).ready(function() {
     $('#Base').click(function(){
         sendPrimeCommand("base\n");
     });
+    socket.emit('proc', "get time");
 });
 
 function sendPrimeCommand(message) {
@@ -51,15 +47,7 @@ function sendRequest() {
     socket.emit('prime', "get volume\n");
     socket.emit('prime', "get bpm\n");
     socket.emit('prime', "current mode\n");
-    // socket.emit('proc', 'uptime');
-    var today = new Date();
-    var part1 = today.getHours() - HOUR;
-    var part2 = today.getMinutes() - MINUTES;
-    var part3 = today.getSeconds()- SECOND;
-    var date = part1 + '-'+ part2 + '-' + part3;
-    // console.log(date);
-
-    $('#status').html("devices up for :<br>" + date.toString() + " H : M: S");
+    socket.emit('proc', 'uptime');
 }
 
 socket.on('commandReply', function(result) {
@@ -87,3 +75,58 @@ socket.on('disconnect', () => {
     $('#error-box').show();
 })
 
+
+// Handle data coming back from the server
+socket.on('fileContents', function(result) {
+    var fileName = result.fileName;
+    var contents = result.contents;
+//		console.log("fileContenst callback: fileName " + fileName
+//				+ ", contents: " + contents);
+
+    var domObj;
+    switch(fileName) {
+        case 'version':
+            domObj = $('#versionId');
+            break;
+        case 'uptime':
+            domObj = $('#status');
+            break;
+        case 'cpuinfo':
+            domObj = $('#cpuinfoId');
+            break;
+        case 'cmdline':
+            domObj = $('#cmdlineId');
+            break;
+        default:
+            console.log("Unknown DOM object: " + fileName);
+            return;
+    }
+    // Make linefeeds into <br> tag.
+    // contents = replaceAll(contents, "\n", "<br/>");
+    // console.log(contents.substring(0, 5))
+    var uptmeInSeconds = parseInt(contents) - INITIALSECOND;
+    var minutes, hours, secconds
+    if (uptmeInSeconds > 60) {
+        minutes = uptmeInSeconds / 60;
+        secconds = uptmeInSeconds % 60
+
+        if (minutes > 60) {
+            hours = minutes / 60;
+            minutes = minutes % 60
+        }
+
+    } else {
+        hours = 0;
+        minutes = 0;
+        secconds = uptmeInSeconds
+    }
+
+
+    domObj.html("devices up for : \n" + "<br/>"+ hours.toString() + ":" + minutes.toString() + " : " + secconds.toString() + " H : M: S");
+});
+
+
+socket.on("initialtime", function(result) {
+    INITIALSECOND = parseInt((result.contents).substring(0, 5));
+    // console.log(INITIALSECOND)
+})
