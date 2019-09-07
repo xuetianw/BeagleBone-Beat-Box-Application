@@ -141,6 +141,11 @@ void accelerometer_init()
     pthread_create(&accelerometer_id, NULL, accelerometer_thread, NULL);
 }
 
+void accelerometer_cleanup() {
+    pthread_join(accelerometer_id, NULL);
+}
+
+
 void* accelerometer_thread(void* arg)
 {
 	unsigned char buff[7];

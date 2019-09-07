@@ -19,7 +19,7 @@ static int music_number = 0;
 static pthread_t music_threadId;
 
 
-void timing(long nanoseconds);
+
 void* music_thread(void* arg);
 
 int get_music_number() {
@@ -37,6 +37,10 @@ void music_init() {
 
     pthread_create(&music_threadId, NULL, music_thread, NULL);
     set_music_number(MUSIC_NOTHING);
+}
+
+void music_cleanup() {
+    pthread_join(music_threadId, NULL);
 }
 
 void base_drum() {
@@ -164,3 +168,4 @@ void* music_thread(void* arg)
 
     return NULL;
 }
+

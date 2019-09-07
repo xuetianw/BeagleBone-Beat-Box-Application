@@ -12,11 +12,7 @@
 #define MSG_MAX_LEN 10240
 #define PORT		8088
 
-#define MAX_VOLUME 100
-#define MIN_VOLUME 0
 
-#define MAX_BPM 300
-#define MIN_BPM 40
 
 
 pthread_t udp_id;

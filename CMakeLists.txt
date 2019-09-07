@@ -16,6 +16,7 @@ add_executable(Beat_Box
         music.c
         udp_listen.c
         accelerometer.c
+        joystick.c
         )
 
 

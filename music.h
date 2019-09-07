@@ -20,8 +20,18 @@ void set_music_number(int new_music_num);
 
 void timing(long nanoseconds);
 
+void music_cleanup();
+
 #define MUSIC_NOTHING 0
 #define ROCK1NUM 1
 #define ROCK2NUM 2
+
+
+#define MAX_VOLUME 100
+#define MIN_VOLUME 0
+
+#define MAX_BPM 300
+#define MIN_BPM 40
+
 
 #endif //BEAT_BOX_MUSIC_H
