@@ -107,8 +107,11 @@ socket.on('fileContents', function(result) {
     var uptmeInSeconds = parseInt(contents) - INITIALSECOND;
     var minutes, hours, secconds
     if (uptmeInSeconds > 60) {
-        minutes = uptmeInSeconds / 60;
+        minutes = Math.floor(uptmeInSeconds / 60);
+        console.log(minutes);
+
         secconds = uptmeInSeconds % 60
+        hours = 0;
 
         if (minutes > 60) {
             hours = minutes / 60;
@@ -122,7 +125,7 @@ socket.on('fileContents', function(result) {
     }
 
 
-    domObj.html("devices up for : \n" + "<br/>"+ hours.toString() + ":" + minutes.toString() + " : " + secconds.toString() + " H : M: S");
+    domObj.html("devices up for : \n " + "<br/>"+ hours.toString() + ":" + minutes.toString() + " : " + secconds.toString() + " H : M: S");
 });
 
 
