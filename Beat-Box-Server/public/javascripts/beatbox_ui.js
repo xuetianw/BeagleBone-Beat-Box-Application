@@ -71,7 +71,7 @@ socket.on('commandReply', function(result) {
     // $('#messages').scrollTop($('#messages').prop('scrollHeight'));
 });
 
-socket.on('disconnect', () => {
+socket.on('disconnect', function() {
     $('#error-box').show();
 })
 
