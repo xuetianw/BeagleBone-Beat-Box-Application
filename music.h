@@ -18,6 +18,8 @@ int get_music_number();
 
 void set_music_number(int new_music_num);
 
+void timing(long nanoseconds);
+
 #define MUSIC_NOTHING 0
 #define ROCK1NUM 1
 #define ROCK2NUM 2

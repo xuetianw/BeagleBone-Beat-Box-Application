@@ -2,6 +2,7 @@
 #include "audioMixer_template.h"
 #include "music.h"
 #include "udp_listen.h"
+#include "accelerometer.h"
 
 
 int main() {
@@ -9,7 +10,10 @@ int main() {
 
     music_init();
 
+    accelerometer_init();
+
     UdpListener_startListening();
+
 
 //    base_drum();
 //    hi_hat();

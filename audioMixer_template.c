@@ -49,7 +49,7 @@ static int volume = 0;
 
 void AudioMixer_init(void)
 {
-//	AudioMixer_setVolume(DEFAULT_VOLUME);
+	AudioMixer_setVolume(DEFAULT_VOLUME);
     set_BPM(DEFAULT_BPM);
 
 	// Initialize the currently active sound-bites being played
