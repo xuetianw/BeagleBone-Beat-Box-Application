@@ -1,5 +1,7 @@
 # BeagleBone-Beat-Box-Application
   
+
+![alt text](README-photos/20200410_035131.jpg)
   
 on the targer run Beat_Box to start the program
 ![alt text](README-photos/image2.png)

@@ -3,44 +3,46 @@
 var INITIALSECOND;
 // Make connection to server when web page is fully loaded.
 const socket = io()
-$(document).ready(function() {
+$(document).ready(function () {
 
-    window.setInterval(function() {sendRequest()}, 1000);
-    $('#modeNone').click(function(){
-		sendPrimeCommand("none\n");
-	});
-	$('#modeRock1').click(function(){
+    window.setInterval(function () {
+        sendRequest()
+    }, 1000);
+    $('#modeNone').click(function () {
+        sendPrimeCommand("none\n");
+    });
+    $('#modeRock1').click(function () {
         sendPrimeCommand("rock 1\n");
     });
-	$('#modeRock2').click(function(){
-		sendPrimeCommand("rock 2\n");
-	});
-	$('#volumeDown').click(function(){
-		sendPrimeCommand("decrease volume\n");
-	});
-    $('#volumeUp').click(function(){
+    $('#modeRock2').click(function () {
+        sendPrimeCommand("rock 2\n");
+    });
+    $('#volumeDown').click(function () {
+        sendPrimeCommand("decrease volume\n");
+    });
+    $('#volumeUp').click(function () {
         sendPrimeCommand("increase volume\n");
     });
-    $('#BPMown').click(function(){
+    $('#BPMown').click(function () {
         sendPrimeCommand("decrease BPM\n");
     });
-    $('#BPMUp').click(function(){
+    $('#BPMUp').click(function () {
         sendPrimeCommand("increase BPM\n");
     });
-    $('#Hi-Hat').click(function(){
+    $('#Hi-Hat').click(function () {
         sendPrimeCommand("hi-hat\n");
     });
-    $('#Snare').click(function(){
+    $('#Snare').click(function () {
         sendPrimeCommand("snare\n");
     });
-    $('#Base').click(function(){
+    $('#Base').click(function () {
         sendPrimeCommand("base\n");
     });
     socket.emit('proc', "get time");
 });
 
 function sendPrimeCommand(message) {
-	socket.emit('prime', message);
+    socket.emit('prime', message);
 }
 
 function sendRequest() {
@@ -50,20 +52,19 @@ function sendRequest() {
     socket.emit('proc', 'uptime');
 }
 
-socket.on('commandReply', function(result) {
+socket.on('commandReply', function (result) {
     console.log(result);
     if (result.includes("current volume is ")) {
         var temp = result.substring("current volume is ".length, result.length);
         $('#volumeid').val(temp)
-    } else if( result.includes("current BPM is")) {
+    } else if (result.includes("current BPM is")) {
         var temp = result.substring("current BPM is ".length, result.length);
         $('#BPMid').val(temp)
-    } else if( result.includes("current mode is ")) {
+    } else if (result.includes("current mode is ")) {
         var temp = result.substring("current mode is ".length, result.length);
         $('#modeid').html(temp)
     }
     // console.log("testest");
-
 
 
     // var newDiv = $('<div></div>').text(result);
@@ -71,20 +72,20 @@ socket.on('commandReply', function(result) {
     // $('#messages').scrollTop($('#messages').prop('scrollHeight'));
 });
 
-socket.on('disconnect', function() {
+socket.on('disconnect', function () {
     $('#error-box').show();
 })
 
 
 // Handle data coming back from the server
-socket.on('fileContents', function(result) {
+socket.on('fileContents', function (result) {
     var fileName = result.fileName;
     var contents = result.contents;
 //		console.log("fileContenst callback: fileName " + fileName
 //				+ ", contents: " + contents);
 
     var domObj;
-    switch(fileName) {
+    switch (fileName) {
         case 'version':
             domObj = $('#versionId');
             break;
@@ -125,11 +126,11 @@ socket.on('fileContents', function(result) {
     }
 
 
-    domObj.html("devices up for : \n " + "<br/>"+ hours.toString() + ":" + minutes.toString() + " : " + secconds.toString() + " H : M: S");
+    domObj.html("devices up for : \n " + "<br/>" + hours.toString() + ":" + minutes.toString() + " : " + secconds.toString() + " H : M: S");
 });
 
 
-socket.on("initialtime", function(result) {
+socket.on("initialtime", function (result) {
     INITIALSECOND = parseInt((result.contents).substring(0, 5));
     // console.log(INITIALSECOND)
 })
